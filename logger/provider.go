@@ -33,15 +33,7 @@ func (instance *Provider) GetLogger(name string) log.Logger {
 }
 
 func (instance *Provider) GetAllLevels() []log.Level {
-	return []log.Level{
-		log.LevelTrace,
-		log.LevelDebug,
-		log.LevelInfo,
-		log.LevelWarn,
-		log.LevelError,
-		log.LevelFatal,
-		sbl.LevelPanic,
-	}
+	return sbl.LevelProvider()
 }
 
 func (instance *Provider) GetFieldKeySpec() fields.KeysSpec {

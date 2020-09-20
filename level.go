@@ -51,3 +51,15 @@ func LevelSlf4gToLogrus(in log.Level) logrus.Level {
 		panic(fmt.Sprintf("unknown log level %v", in))
 	}
 }
+
+func LevelProvider() []log.Level {
+	return []log.Level{
+		log.LevelTrace,
+		log.LevelDebug,
+		log.LevelInfo,
+		log.LevelWarn,
+		log.LevelError,
+		log.LevelFatal,
+		LevelPanic,
+	}
+}

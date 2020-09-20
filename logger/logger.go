@@ -18,7 +18,7 @@ func (instance *CoreLogger) GetName() string {
 
 func (instance *CoreLogger) Log(e log.Event) {
 	le := logrus.NewEntry(instance.Provider.Target)
-	le.Data = logrus.Fields(fields.AsMap(e))
+	le.Data = logrus.Fields(fields.AsMap(e.GetFields()))
 	le.Level = sbl.LevelSlf4gToLogrus(e.GetLevel())
 
 	if v := log.GetTimestampOf(e, instance.Provider); v != nil {
