@@ -46,11 +46,15 @@ type FormatterAndWriter struct {
 }
 
 func (instance *FormatterAndWriter) Format(le *logrus.Entry) ([]byte, error) {
-	e := log.NewEvent(
-		sbl.LevelLogrusToSlf4g(le.Level),
-		fields.Map(le.Data),
-		3,
-	)
+	f := fields.Map(le.Data)
+	f[instance.Target.GetProvider().GetFieldKeySpec().GetMessage()] = le.Message
+	if v := le.Time; !v.IsZero() {
+		f[instance.Target.GetProvider().GetFieldKeySpec().GetTimestamp()] = v
+	}
+
+	e := log.NewEvent(sbl.LevelLogrusToSlf4g(le.Level), f, 3)
+	e.Context = le.Context
+
 	instance.Target.Log(e)
 	return instance.magic(), nil
 }

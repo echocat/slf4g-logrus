@@ -32,8 +32,10 @@ func (instance *CoreLogger) Log(e log.Event) {
 		delete(le.Data, instance.Provider.GetFieldKeySpec().GetMessage())
 	}
 
-	if v := log.GetLoggerOf(e, instance.Provider); v == nil {
-		le.Data[instance.Provider.GetFieldKeySpec().GetMessage()] = instance.GetName()
+	if v := log.GetLoggerOf(e, instance.Provider); v == nil && instance.GetName() != log.GlobalLoggerName {
+		le.Data[instance.Provider.GetFieldKeySpec().GetLogger()] = instance.GetName()
+	} else if v != nil && *v == log.GlobalLoggerName {
+		delete(le.Data, instance.Provider.GetFieldKeySpec().GetLogger())
 	}
 
 	le.Log(le.Level, msg)
