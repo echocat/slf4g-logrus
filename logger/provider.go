@@ -32,11 +32,11 @@ func (instance *Provider) GetLogger(name string) log.Logger {
 	})
 }
 
-func (instance *Provider) GetAllLevels() []log.Level {
+func (instance *Provider) GetAllLevels() log.Levels {
 	return sbl.LevelProvider()
 }
 
-func (instance *Provider) GetFieldKeySpec() fields.KeysSpec {
+func (instance *Provider) GetFieldKeysSpec() fields.KeysSpec {
 	return fieldKeysSpecV
 }
 
