@@ -3,7 +3,7 @@ package logrus
 import (
 	"context"
 	"github.com/echocat/slf4g"
-	sbl "github.com/echocat/slf4g-logrus"
+	blevel "github.com/echocat/slf4g-logrus/level"
 	"github.com/echocat/slf4g/fields"
 	"github.com/echocat/slf4g/level"
 	"github.com/sirupsen/logrus"
@@ -13,12 +13,6 @@ import (
 
 const (
 	RootLoggerName = "ROOT"
-
-	maximumCallerDepth int = 25
-	minimumCallerDepth int = 4
-
-	slf4gLogrusLoggerPackage = "github.com/echocat/slf4g-logrus/logger"
-	slf4gPackage             = "github.com/echocat/slf4g"
 )
 
 var (
@@ -38,7 +32,7 @@ func (instance *CoreLogger) GetName() string {
 
 func (instance *CoreLogger) Log(e log.Event, skipFrames uint16) {
 	le := logrus.NewEntry(instance.Provider.Target)
-	le.Level = sbl.LevelSlf4gToLogrus(e.GetLevel())
+	le.Level = blevel.Slf4gToLogrus(e.GetLevel())
 	if err := e.ForEach(func(key string, value interface{}) error {
 		le.Data[key] = value
 		return nil

@@ -2,7 +2,7 @@ package main
 
 import (
 	"errors"
-	_ "github.com/echocat/slf4g-logrus/bridge/hook"
+	_ "github.com/echocat/slf4g-logrus/logrus2slf4g/hook"
 	"github.com/sirupsen/logrus"
 )
 

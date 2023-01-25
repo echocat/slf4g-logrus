@@ -42,7 +42,7 @@ func (instance *Provider) GetLogger(name string) log.Logger {
 }
 
 func (instance *Provider) GetAllLevels() level.Levels {
-	return sbl.LevelProvider()
+	return sbl.DefaultLevelProvider.GetLevels()
 }
 
 func (instance *Provider) GetFieldKeysSpec() fields.KeysSpec {

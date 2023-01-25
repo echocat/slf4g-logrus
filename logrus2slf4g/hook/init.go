@@ -1,7 +1,7 @@
 package logrus
 
 import (
-	"github.com/echocat/slf4g-logrus/bridge"
+	"github.com/echocat/slf4g-logrus/logrus2slf4g"
 )
 
 func init() {

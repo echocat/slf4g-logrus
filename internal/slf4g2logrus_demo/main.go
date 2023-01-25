@@ -2,7 +2,7 @@ package main
 
 import (
 	log "github.com/echocat/slf4g"
-	_ "github.com/echocat/slf4g-logrus/logger"
+	_ "github.com/echocat/slf4g-logrus/slf4g2logrus"
 )
 
 func main() {
