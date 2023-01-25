@@ -3,14 +3,9 @@ package main
 import (
 	log "github.com/echocat/slf4g"
 	_ "github.com/echocat/slf4g-logrus/logger"
-	"github.com/sirupsen/logrus"
 )
 
 func main() {
-	logrus.SetFormatter(&logrus.TextFormatter{
-		ForceColors: true,
-	})
-
 	log.With("foo", "bar").Debug("hello, debug")
 	log.With("a", "foo").
 		With("c", "xyz").

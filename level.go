@@ -2,28 +2,28 @@ package sbl
 
 import (
 	"fmt"
-	log "github.com/echocat/slf4g"
+	"github.com/echocat/slf4g/level"
 	"github.com/sirupsen/logrus"
 )
 
 const (
-	LevelPanic = log.LevelFatal + 1000
+	LevelPanic = level.Fatal + 1000
 )
 
-func LevelLogrusToSlf4g(in logrus.Level) log.Level {
+func LevelLogrusToSlf4g(in logrus.Level) level.Level {
 	switch in {
 	case logrus.TraceLevel:
-		return log.LevelTrace
+		return level.Trace
 	case logrus.DebugLevel:
-		return log.LevelDebug
+		return level.Debug
 	case logrus.InfoLevel:
-		return log.LevelInfo
+		return level.Info
 	case logrus.WarnLevel:
-		return log.LevelWarn
+		return level.Warn
 	case logrus.ErrorLevel:
-		return log.LevelError
+		return level.Error
 	case logrus.FatalLevel:
-		return log.LevelFatal
+		return level.Fatal
 	case logrus.PanicLevel:
 		return LevelPanic
 	default:
@@ -31,19 +31,19 @@ func LevelLogrusToSlf4g(in logrus.Level) log.Level {
 	}
 }
 
-func LevelSlf4gToLogrus(in log.Level) logrus.Level {
+func LevelSlf4gToLogrus(in level.Level) logrus.Level {
 	switch in {
-	case log.LevelTrace:
+	case level.Trace:
 		return logrus.TraceLevel
-	case log.LevelDebug:
+	case level.Debug:
 		return logrus.DebugLevel
-	case log.LevelInfo:
+	case level.Info:
 		return logrus.InfoLevel
-	case log.LevelWarn:
+	case level.Warn:
 		return logrus.WarnLevel
-	case log.LevelError:
+	case level.Error:
 		return logrus.ErrorLevel
-	case log.LevelFatal:
+	case level.Fatal:
 		return logrus.FatalLevel
 	case LevelPanic:
 		return logrus.PanicLevel
@@ -52,14 +52,14 @@ func LevelSlf4gToLogrus(in log.Level) logrus.Level {
 	}
 }
 
-func LevelProvider() []log.Level {
-	return []log.Level{
-		log.LevelTrace,
-		log.LevelDebug,
-		log.LevelInfo,
-		log.LevelWarn,
-		log.LevelError,
-		log.LevelFatal,
+func LevelProvider() []level.Level {
+	return []level.Level{
+		level.Trace,
+		level.Debug,
+		level.Info,
+		level.Warn,
+		level.Error,
+		level.Fatal,
 		LevelPanic,
 	}
 }

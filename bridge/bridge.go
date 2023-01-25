@@ -7,6 +7,7 @@ import (
 	"github.com/echocat/slf4g"
 	"github.com/echocat/slf4g-logrus"
 	"github.com/sirupsen/logrus"
+	"reflect"
 )
 
 func Configure() {
@@ -25,18 +26,33 @@ func ConfigureWith(target log.CoreLogger) {
 }
 
 func CreateFor(target log.CoreLogger) *logrus.Logger {
+	result := &logrus.Logger{
+		Hooks: make(logrus.LevelHooks),
+	}
+	ConfigureExistingWith(result, target)
+	return result
+}
+
+func ConfigureExistingWith(existing logrus.FieldLogger, target log.CoreLogger) {
 	faw := &FormatterAndWriter{
 		Target: target,
 		Magic:  NewMagic(16),
 	}
-	return &logrus.Logger{
-		Out:          faw,
-		Hooks:        make(logrus.LevelHooks),
-		Formatter:    faw,
-		ReportCaller: false,
-		Level:        logrus.TraceLevel,
-		ExitFunc:     func(int) {},
+	var elr *logrus.Logger
+	switch v := existing.(type) {
+	case *logrus.Logger:
+		elr = v
+	case *logrus.Entry:
+		elr = v.Logger
+	default:
+		panic(fmt.Errorf("cannot handle logger of type %v; has to be either %v or %v",
+			reflect.TypeOf(existing), reflect.TypeOf(&logrus.Logger{}), reflect.TypeOf(&logrus.Entry{})))
 	}
+	elr.Out = faw
+	elr.Formatter = faw
+	elr.ReportCaller = false
+	elr.Level = logrus.TraceLevel
+	elr.ExitFunc = func(int) {}
 }
 
 type FormatterAndWriter struct {
@@ -50,11 +66,10 @@ func (instance *FormatterAndWriter) Format(le *logrus.Entry) ([]byte, error) {
 		le.Data[instance.Target.GetProvider().GetFieldKeysSpec().GetTimestamp()] = v
 	}
 
-	e := log.NewEvent(sbl.LevelLogrusToSlf4g(le.Level), nil, 3).
-		WithAll(le.Data).
-		WithContext(le.Context)
+	e := instance.Target.NewEvent(sbl.LevelLogrusToSlf4g(le.Level), nil).
+		WithAll(le.Data)
 
-	instance.Target.Log(e)
+	instance.Target.Log(e, 5)
 	return instance.magic(), nil
 }
 
