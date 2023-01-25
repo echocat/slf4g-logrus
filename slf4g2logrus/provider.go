@@ -1,8 +1,8 @@
-package logrus
+package slf4g2logrus
 
 import (
 	"github.com/echocat/slf4g"
-	"github.com/echocat/slf4g-logrus"
+	blevel "github.com/echocat/slf4g-logrus/level"
 	"github.com/echocat/slf4g/fields"
 	"github.com/echocat/slf4g/level"
 	"github.com/sirupsen/logrus"
@@ -42,7 +42,7 @@ func (instance *Provider) GetLogger(name string) log.Logger {
 }
 
 func (instance *Provider) GetAllLevels() level.Levels {
-	return sbl.DefaultLevelProvider.GetLevels()
+	return blevel.DefaultProvider.GetLevels()
 }
 
 func (instance *Provider) GetFieldKeysSpec() fields.KeysSpec {
@@ -50,5 +50,5 @@ func (instance *Provider) GetFieldKeysSpec() fields.KeysSpec {
 }
 
 func (instance *Provider) getLevel() level.Level {
-	return sbl.LevelLogrusToSlf4g(instance.Target.Level)
+	return blevel.LogrusToSlf4g(instance.Target.Level)
 }

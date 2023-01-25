@@ -1,4 +1,4 @@
-package logrus
+package slf4g2logrus
 
 import (
 	"github.com/sirupsen/logrus"
