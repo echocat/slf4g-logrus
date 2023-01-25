@@ -5,7 +5,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"github.com/echocat/slf4g"
-	"github.com/echocat/slf4g-logrus"
+	"github.com/echocat/slf4g-logrus/level"
 	"github.com/sirupsen/logrus"
 	"reflect"
 )
@@ -66,7 +66,7 @@ func (instance *FormatterAndWriter) Format(le *logrus.Entry) ([]byte, error) {
 		le.Data[instance.Target.GetProvider().GetFieldKeysSpec().GetTimestamp()] = v
 	}
 
-	e := instance.Target.NewEvent(sbl.LevelLogrusToSlf4g(le.Level), nil).
+	e := instance.Target.NewEvent(level.LogrusToSlf4g(le.Level), nil).
 		WithAll(le.Data)
 
 	instance.Target.Log(e, 5)
