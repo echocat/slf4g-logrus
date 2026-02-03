@@ -3,6 +3,6 @@ module github.com/echocat/slf4g-logrus
 go 1.14
 
 require (
-	github.com/echocat/slf4g v1.8.3
+	github.com/echocat/slf4g v1.8.4
 	github.com/sirupsen/logrus v1.9.4
 )
